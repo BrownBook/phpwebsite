@@ -209,14 +209,19 @@ class PHPWS_Panel{
             } else {
                 $tab->disableSecure();
             }
+
             $tpl['TITLE'] = $tab->getLink();
+
             if ($id == $currentTab) {
-                $tpl['STATUS'] = 'class="active"';
+                $tpl['STATUS'] = 'class="nav-item active"';
                 $tpl['ACTIVE'] = ' ';
+                $tpl['TITLE'] = $tab->getLink(true, true);
             } else {
-                $tpl['STATUS'] = 'class="inactive"';
+                $tpl['STATUS'] = 'class="nav-item inactive"';
                 $tpl['INACTIVE'] = ' ';
+                $tpl['TITLE'] = $tab->getLink(true, false);
             }
+
             $template['tabs'][] = $tpl;
         }
 
