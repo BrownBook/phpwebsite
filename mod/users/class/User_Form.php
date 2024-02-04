@@ -279,7 +279,7 @@ class User_Form
         }
 
         $form->addSelect('search_group', $groups);
-        $form->addCssClass('search_group', 'form-control');
+        $form->addCssClass('search_group', 'form-select');
         if (isset($_GET['search_group'])) {
             $form->setMatch('search_group', $_GET['search_group']);
         }
@@ -410,11 +410,11 @@ class User_Form
         $vars['group_id'] = $group->id;
         $vars['command'] = 'edit_group';
         $title = 'Edit group name';
-        $links[] = PHPWS_Text::secureLink(Icon::show('edit') . " $title", 'users', $vars, null, $title, 'btn btn-default');
+        $links[] = PHPWS_Text::secureLink(Icon::show('edit') . " $title", 'users', $vars, null, $title, 'btn btn-outline-secondary');
 
         $title = 'Edit Group Permissions';
         $vars['command'] = 'setGroupPermissions';
-        $links[] = PHPWS_Text::secureLink(Icon::show('permission') . " $title", 'users', $vars, null, $title, 'btn btn-default');
+        $links[] = PHPWS_Text::secureLink(Icon::show('permission') . " $title", 'users', $vars, null, $title, 'btn btn-outline-secondary');
 
         $template['LINKS'] = implode(' ', $links);
 
@@ -508,6 +508,7 @@ class User_Form
             $db->addColumn('id');
             $db->addColumn('display_name');
             $result = $db->select('col');
+
             if (PHPWS_Error::isError($result)) {
                 PHPWS_Error::log($result);
             } else {
@@ -515,6 +516,7 @@ class User_Form
                     $message['AUTHORIZE'] = dgettext('users', 'Warning: this user\'s authorization script is broken. Choose another and update.');
                 }
                 $form->addSelect('authorize', $result);
+                $form->addCssClass('authorize', 'form-select');
                 $form->setMatch('authorize', $user->authorize);
                 $form->setLabel('authorize', 'Authorization');
             }
@@ -522,20 +524,31 @@ class User_Form
 
         if (!$user->id || $user->canChangePassword()) {
             $form->addText('username', $user->getUsername());
+            $form->addCssClass('username', 'form-control');
             $form->setRequired('username');
             $form->setLabel('username', 'Username');
+
             $form->addPassword('password1');
             $form->addPassword('password2');
             $form->setLabel('password1', 'Password');
+            $form->setLabel('password2', 'Retype Password');
+
+            $form->addCssClass('password1', 'form-control');
+            $form->addCssClass('password2', 'form-control');
+
             $form->addButton('create_pw', 'Generate password');
         } else {
             $form->addTplTag('USERNAME', $user->getUsername());
             $form->addTplTag('USERNAME_LABEL', '<strong>' . 'Username' . '</strong>');
         }
+
         $form->addText('display_name', $user->display_name);
+        $form->addCssClass('display_name', 'form-control');
+
         $form->addText('email', $user->getEmail());
-        $form->setSize('email', 30);
+        // $form->setSize('email', 30);
         $form->setRequired('email');
+        $form->addCssClass('email', 'form-control');
 
         $form->setLabel('email', 'Email Address');
         $form->setLabel('display_name', 'Display name');
@@ -552,7 +565,7 @@ class User_Form
 
         if ($user->id) {
             $vars['command'] = 'setUserPermissions';
-            $links[] = PHPWS_Text::secureLink(\Icon::show('permission') . ' ' . 'Permissions', 'users', $vars, null, 'Permissions', 'btn btn-default');
+            $links[] = PHPWS_Text::secureLink(\Icon::show('permission') . ' ' . 'Permissions', 'users', $vars, null, 'Permissions', 'btn btn-outline-secondary');
         }
 
         if (isset($links)) {
@@ -837,6 +850,7 @@ class User_Form
             $template['FILE_LIST'] = 'No new scripts found';
         } else {
             $form->addSelect('file_list', $remaining_files);
+            $form->addCssClass('file_list', 'form-select');
             $form->reindexValue('file_list');
             $form->addSubmit('add_script', 'Add Script File');
         }
@@ -880,7 +894,8 @@ class User_Form
 
             $row['CHECK'] = sprintf('<input type="radio" name="default_authorization" value="%s" %s />', $id, $checked);
             $form = new PHPWS_Form();
-            $form->addSelect("default_group[$id]", $groups);
+            $form->addSelect("default_group[{$id}]", $groups);
+            $form->addCssClass("default_group[{$id}]", 'form-select');
             $form->setMatch("default_group[$id]", $default_group);
             $row['DEFAULT_GROUP'] = $form->get("default_group[$id]");
 
@@ -949,6 +964,7 @@ class User_Form
             $menu_options['top.tpl'] = 'top.tpl';
 
             $form->addSelect('user_menu', $menu_options);
+            $form->addCssClass('user_menu', 'form-select');
             $form->setMatch('user_menu', PHPWS_User::getUserSetting('user_menu'));
             $form->setLabel('user_menu', 'User Menu');
 

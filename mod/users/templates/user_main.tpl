@@ -2,7 +2,7 @@
     <h2>{TITLE}</h2>
 
     <!-- BEGIN message -->
-    <div class="row">
+    <div class="mb-3">
         <div class="alert">
             {MESSAGE}
         </div>

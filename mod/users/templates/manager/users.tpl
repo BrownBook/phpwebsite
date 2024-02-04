@@ -1,5 +1,5 @@
-<div class="pull-right">{SEARCH}</div>
-<div style="margin-bottom: 10px">
+<div class="float-end">{SEARCH}</div>
+<div class="mb-3">
   <a href="{NEW_USER_URI}" class="btn btn-success"><i class="fa fa-user"></i> Add user</a>
 </div>
 <table class="table table-striped table-hover sans" id="user-manager">
@@ -33,12 +33,12 @@
 
 {START_FORM}
 
-<div class="row">
+<div class="row mb-3">
   <div class="col-lg-3">
-    <div class="panel panel-default">
-      <div class="panel-heading">Filter users by group membership</div>
-      <div class="panel-body">
-        <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">Filter users by group membership</div>
+        <div class="row mb-2">
           <div class="col-lg-12">
             <div class="form-group">
               <label class="radio-inline"> {QGROUP_2} {QGROUP_2_LABEL_TEXT} </label>
@@ -48,11 +48,11 @@
         </div>
         <div class="row">
           <div class="col-lg-12">
-            <div class="form-group">
+            <div class="mb-3">
               <label for="group-search_search_group" style="display:none;">Group</label>{SEARCH_GROUP}
             </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-default">{GROUP_SUB_VALUE}</button>
+            <div class="mb-2">
+              <button type="submit" class="btn btn-outline-secondary">{GROUP_SUB_VALUE}</button>
             </div>
           </div>
         </div>
