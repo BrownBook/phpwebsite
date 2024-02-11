@@ -9,9 +9,9 @@ javascript/captcha/recaptcha/recaptcha_settings.php
 .metadata/
 .project
 .settings/
-.vagrant
-.bower_components
-/bower_components/
 /nbproject/private/
 vendor/
 /inc/
+/mod/intern/
+themes/bootstrap5-brownbook/
+composer.phar
