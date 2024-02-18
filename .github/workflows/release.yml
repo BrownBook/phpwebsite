@@ -1,0 +1,71 @@
+name: Release
+
+on:
+  push:
+    # Create a release when a new version tag is pushed to main
+    # branches: ['main']
+    tags: ["v*"] # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  buildRelease:
+    #uses: BrownBook/ExperientialLearningInventory/.github/workflows/node.js.yml@main
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-versions: ["7.2"]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      # Docs: https://github.com/shivammathur/setup-php
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, intl
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          # Use composer.json for key, if composer.lock is not committed.
+          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: |
+          composer install --no-progress --prefer-dist --optimize-autoloader
+
+      #- name: Test with phpunit
+      #  run: vendor/bin/phpunit --coverage-text
+
+      - name: Create Artifact
+        run: tar -czf phpwebsite-brownbook-${{ github.ref_name }}.tar.gz admin Autoloaders config core files images inc javascript lib locale logs mod secure setup src src-phpws-legacy src-phpws2 themes util vendor cli.php index.php LICENSE.md
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          body: ""
+          draft: false
+          prerelease: false
+
+      - name: Upload Artifact
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./phpwebsite-brownbook-${{ github.ref_name }}.tar.gz
+          asset_name: phpwebsite-brownbook-${{ github.ref_name }}.tar.gz
+          asset_content_type: application/gzip
