@@ -47,7 +47,7 @@ jobs:
       #  run: vendor/bin/phpunit --coverage-text
 
       - name: Create Artifact
-        run: tar -czf phpwebsite-brownbook-${{ github.ref_name }}.tar.gz admin Autoloaders config core files images inc javascript lib locale logs mod secure setup src src-phpws-legacy src-phpws2 themes util vendor cli.php index.php LICENSE.md
+        run: tar -czf phpwebsite-brownbook-${{ github.ref_name }}.tar.gz admin Autoloaders config core files images javascript lib locale logs mod secure setup src src-phpws-legacy src-phpws2 themes util vendor cli.php index.php LICENSE.md
 
       - name: Create Release
         id: create_release
