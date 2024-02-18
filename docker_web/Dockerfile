@@ -1,5 +1,4 @@
 FROM centos:7
-MAINTAINER "Ted Eberhard" <eberhardtm@appstate.edu>
 ENV container docker
 USER root
 # install php7 when canopy core is ready
@@ -12,7 +11,7 @@ RUN yum -y install php71w php72w-fpm php72w-common php72w-mysql php72w-pgsql php
 #RUN yum -y install phpmyadmin phpPgAdmin vim
 #RUN yum -y install vim
 #RUN yum -y install nginx
-RUN yum -y install gcc make vim nginx zip
+RUN yum -y install gcc make vim nginx zip unzip postgresql;
 RUN yum -y update
 RUN pecl install Xdebug
 #ADD docker_conf/phpMyAdmin.conf /etc/httpd/conf.d/phpMyAdmin.conf

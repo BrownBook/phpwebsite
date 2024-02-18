@@ -1,6 +1,6 @@
-<div class="pull-right">{SEARCH}</div>
+<div class="float-end">{SEARCH}</div>
 <div style="margin : 10px 0px">
-  <a href="{ADD_GROUP_URI}" class="btn btn-success"><i class="fa fa-group"></i> Create group</a>
+    <a href="{ADD_GROUP_URI}" class="btn btn-success"><i class="fa fa-group"></i> Create group</a>
 </div>
 <table class="table table-striped table-hover">
     <tr>
@@ -18,9 +18,9 @@
 </table>
 <!-- BEGIN empty_message -->
 <div>
-{EMPTY_MESSAGE}
+    {EMPTY_MESSAGE}
 </div>
 <!-- END empty_message -->
 <div style="text-align: center;">{TOTAL_ROWS}<br />
-{PAGE_LABEL} {PAGES}<br />
+    {PAGE_LABEL} {PAGES}<br />
 {LIMIT_LABEL} {LIMITS}</div>

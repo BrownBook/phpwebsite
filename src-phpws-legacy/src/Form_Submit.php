@@ -38,13 +38,7 @@ class Form_Submit extends Form_Element
             }
             $this->setExtra($extra);
         }
-        return '<input type="submit" '
-                . $this->getName(true)
-                . $this->getValue()
-                . $this->getDisabled()
-                . $this->getReadOnly()
-                . $this->getWidth(true)
-                . $this->getData() . ' />';
+        return "<button type=\"submit\" class=\"btn btn-primary\" {$this->getName(true)} {$this->getValue()} {$this->getDisabled()} {$this->getReadOnly()} {$this->getWidth(true)} {$this->getData()}>{$this->value}</button>";
     }
 
 }

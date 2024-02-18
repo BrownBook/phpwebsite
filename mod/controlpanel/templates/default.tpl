@@ -1,6 +1,6 @@
 <!-- BEGIN title -->
-<div class="panel-title">
-<h2>{TITLE}</h2>
+<div class="card-title">
+    <h2>{TITLE}</h2>
 </div>
 <!-- END title -->
 <!-- BEGIN message -->

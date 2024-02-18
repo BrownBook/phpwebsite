@@ -78,22 +78,25 @@ class PHPWS_Panel_Tab {
         }
     }
 
-    public function getLink($addTitle=true)
+    public function getLink($addTitle=true, $isActiveTab=false)
     {
+        $tabActiveStyle = 'inactive';
+        if($isActiveTab){
+            $tabActiveStyle = 'active';
+        }
+
         if ($addTitle){
             $title = $this->getTitle();
             $link = $this->getLink(false);
             $link_title = $this->getLinkTitle();
 
             if ($this->_strict) {
-                return sprintf('<a href="%s"%s>%s</a>', $link, $link_title, $title);
+                return "<a class=\"nav-link {$tabActiveStyle}\" href=\"{$link}\" {$link_title}>{$title}</a>";
             } elseif ($this->_secure) {
                 $authkey = Current_User::getAuthKey();
-                return sprintf('<a href="%s&amp;tab=%s&amp;authkey=%s"%s>%s</a>',
-                $link, $this->id, $authkey, $link_title, $title);
+                return "<a class=\"nav-link {$tabActiveStyle}\" href=\"{$link}&amp;tab={$this->id}&amp;authkey={$authkey}\" {$link_title}>{$title}</a>";
             } else {
-                return sprintf('<a href="%s&amp;tab=%s"%s>%s</a>',
-                $link, $this->id, $link_title, $title);
+                return "<a class=\"nav-link {$tabActiveStyle}\" href=\"{$link}&amp;tab={$this->id}\" {$link_title}>{$title}</a>";
             }
         } else {
             return $this->link;
