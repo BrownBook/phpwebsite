@@ -65,7 +65,7 @@ class PHPWS_DB_Where {
 
     public function setConj($conj)
     {
-        $conj = strtoupper($conj);
+        $conj = $conj ? strtoupper($conj) : null;
         if (empty($conj) || ($conj != 'OR' && $conj != 'AND')) {
             return false;
         }

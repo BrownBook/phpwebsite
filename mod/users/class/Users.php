@@ -266,7 +266,7 @@ class PHPWS_User
             if ($this->last_logged == 0 || empty($this->last_logged))
                 return null;
             else
-                return strftime($mode, $this->last_logged);
+                return date($mode, $this->last_logged);
         }
     }
 
@@ -850,7 +850,7 @@ class PHPWS_User
         }
 
 
-        $logged = $this->getLastLogged('%Y/%m/%d %H:%M');
+        $logged = $this->getLastLogged('Y/m/d H:i');
 
         if (empty($logged)) {
             $template['LAST_LOGGED'] = 'Never';

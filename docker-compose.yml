@@ -1,14 +1,14 @@
 version: '3'
 services:
-  mysql_db:
-   image: mariadb
-   ports:
-   - "4306:3306"
-   environment:
-    MYSQL_USER: canopy
-    MYSQL_PASSWORD: canopy
-    MYSQL_DATABASE: canopy
-    MYSQL_ROOT_PASSWORD: canopy
+  # mysql_db:
+  #  image: mariadb
+  #  ports:
+  #  - "4306:3306"
+  #  environment:
+  #   MYSQL_USER: canopy
+  #   MYSQL_PASSWORD: canopy
+  #   MYSQL_DATABASE: canopy
+  #   MYSQL_ROOT_PASSWORD: canopy
 
   postgres_db:
     build:
@@ -27,7 +27,7 @@ services:
     ports:
      - "8080:80"
     depends_on:
-     - mysql_db
+    #  - mysql_db
      - postgres_db
     volumes:
      - .:/var/www/html

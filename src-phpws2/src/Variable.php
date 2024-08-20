@@ -263,8 +263,7 @@ abstract class Variable extends \Canopy\Data
      */
     public function setLabel($label)
     {
-        $this->label = filter_var($label, FILTER_SANITIZE_STRING,
-                FILTER_FLAG_STRIP_LOW);
+        $this->label = htmlspecialchars($label);
     }
 
     /**

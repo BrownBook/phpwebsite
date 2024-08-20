@@ -245,13 +245,14 @@ class Calendar_Admin
 
             $weekdays = array(1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7);
 
-            $weekday_labels = array(1 => strftime('%A', mktime(0, 0, 0, 1, 5, 1970)),
-                2 => strftime('%A', mktime(0, 0, 0, 1, 6, 1970)),
-                3 => strftime('%A', mktime(0, 0, 0, 1, 7, 1970)),
-                4 => strftime('%A', mktime(0, 0, 0, 1, 8, 1970)),
-                5 => strftime('%A', mktime(0, 0, 0, 1, 9, 1970)),
-                6 => strftime('%A', mktime(0, 0, 0, 1, 10, 1970)),
-                7 => strftime('%A', mktime(0, 0, 0, 1, 11, 1970))
+            $weekday_labels = array(
+                1 => date('l', mktime(0, 0, 0, 1, 5, 1970)),
+                2 => date('l', mktime(0, 0, 0, 1, 6, 1970)),
+                3 => date('l', mktime(0, 0, 0, 1, 7, 1970)),
+                4 => date('l', mktime(0, 0, 0, 1, 8, 1970)),
+                5 => date('l', mktime(0, 0, 0, 1, 9, 1970)),
+                6 => date('l', mktime(0, 0, 0, 1, 10, 1970)),
+                7 => date('l', mktime(0, 0, 0, 1, 11, 1970))
             );
 
             $form->addCheck('weekday_repeat', $weekdays);
@@ -272,18 +273,18 @@ class Calendar_Admin
             );
 
             $frequency = array('every_month' => 'Every month',
-                1 => strftime('%B', mktime(0, 0, 0, 1, 1, 1970)),
-                2 => strftime('%B', mktime(0, 0, 0, 2, 1, 1970)),
-                3 => strftime('%B', mktime(0, 0, 0, 3, 1, 1970)),
-                4 => strftime('%B', mktime(0, 0, 0, 4, 1, 1970)),
-                5 => strftime('%B', mktime(0, 0, 0, 5, 1, 1970)),
-                6 => strftime('%B', mktime(0, 0, 0, 6, 1, 1970)),
-                7 => strftime('%B', mktime(0, 0, 0, 7, 1, 1970)),
-                8 => strftime('%B', mktime(0, 0, 0, 8, 1, 1970)),
-                9 => strftime('%B', mktime(0, 0, 0, 9, 1, 1970)),
-                10 => strftime('%B', mktime(0, 0, 0, 10, 1, 1970)),
-                11 => strftime('%B', mktime(0, 0, 0, 11, 1, 1970)),
-                12 => strftime('%B', mktime(0, 0, 0, 12, 1, 1970)));
+                1 => date('F', mktime(0, 0, 0, 1, 1, 1970)),
+                2 => date('F', mktime(0, 0, 0, 2, 1, 1970)),
+                3 => date('F', mktime(0, 0, 0, 3, 1, 1970)),
+                4 => date('F', mktime(0, 0, 0, 4, 1, 1970)),
+                5 => date('F', mktime(0, 0, 0, 5, 1, 1970)),
+                6 => date('F', mktime(0, 0, 0, 6, 1, 1970)),
+                7 => date('F', mktime(0, 0, 0, 7, 1, 1970)),
+                8 => date('F', mktime(0, 0, 0, 8, 1, 1970)),
+                9 => date('F', mktime(0, 0, 0, 9, 1, 1970)),
+                10 => date('F', mktime(0, 0, 0, 10, 1, 1970)),
+                11 => date('F', mktime(0, 0, 0, 11, 1, 1970)),
+                12 => date('F', mktime(0, 0, 0, 12, 1, 1970)));
 
             $form->addSelect('every_repeat_number', $every_repeat_week);
             $form->addSelect('every_repeat_weekday', $weekday_labels);
@@ -1148,10 +1149,10 @@ class Calendar_Admin
             }
 
             // First check if we are in the correct month or if the repeat is in every month
-            if ($every_repeat_frequency == 'every_month' || $every_repeat_frequency == (int) strftime('%m', $time_unit)) {
+            if ($every_repeat_frequency == 'every_month' || $every_repeat_frequency == (int) date('d', $time_unit)) {
 
                 // next check if we are in the correct weekday
-                $current_weekday = (int) strftime('%u', $time_unit);
+                $current_weekday = (int) date('N', $time_unit);
 
                 if ($current_weekday == $every_repeat_weekday) {
                     $current_day = strftime('%e', $time_unit);
@@ -1199,9 +1200,9 @@ class Calendar_Admin
             $leap_year = false;
         }
         printf('start time %s<br>', strftime('%c', $event->start_time));
-        $c_hour = (int) strftime('%H', $event->start_time);
-        $c_min = (int) strftime('%M', $event->start_time);
-        $c_month = (int) strftime('%m', $event->start_time);
+        $c_hour = (int) date('H', $event->start_time);
+        $c_min = (int) date('i', $event->start_time);
+        $c_month = (int) date('d', $event->start_time);
         $c_day = (int) strftime('%d', $event->start_time);
         $c_year = (int) strftime('%Y', $event->start_time);
 
@@ -1217,9 +1218,9 @@ class Calendar_Admin
 
         while ($ts_count <= $event->end_repeat) {
             $copy_event->id = 0;
-            $c_hour = (int) strftime('%H', $ts_count);
-            $c_min = (int) strftime('%M', $ts_count);
-            $ts_month = $c_month = (int) strftime('%m', $ts_count);
+            $c_hour = (int) date('H', $ts_count);
+            $c_min = (int) date('i', $ts_count);
+            $ts_month = $c_month = (int) date('d', $ts_count);
             $ts_day = $c_day = (int) strftime('%d', $ts_count);
             $c_year = (int) strftime('%Y', $ts_count);
 
@@ -1255,9 +1256,9 @@ class Calendar_Admin
 
         $max_count = 0;
 
-        $c_hour = (int) strftime('%H', $event->start_time);
-        $c_min = (int) strftime('%M', $event->start_time);
-        $c_month = (int) strftime('%m', $event->start_time);
+        $c_hour = (int) date('H', $event->start_time);
+        $c_min = (int) date('i', $event->start_time);
+        $c_month = (int) date('d', $event->start_time);
         $c_day = (int) strftime('%d', $event->start_time);
         $c_year = (int) strftime('%Y', $event->start_time);
 
@@ -1276,9 +1277,9 @@ class Calendar_Admin
 
             $copy_event->id = 0;
 
-            $c_hour = (int) strftime('%H', $ts_count);
-            $c_min = (int) strftime('%M', $ts_count);
-            $ts_month = $c_month = (int) strftime('%m', $ts_count);
+            $c_hour = (int) date('H', $ts_count);
+            $c_min = (int) date('i', $ts_count);
+            $ts_month = $c_month = (int) date('d', $ts_count);
             $ts_day = $c_day = (int) strftime('%d', $ts_count);
             $c_year = (int) strftime('%Y', $ts_count);
 
@@ -1325,7 +1326,7 @@ class Calendar_Admin
         $dst_start = date('I', $event->start_time);
         while ($time_unit <= $event->end_repeat) {
 
-            if (!in_array(strftime('%u', $time_unit), $repeat_days)) {
+            if (!in_array(date('N', $time_unit), $repeat_days)) {
                 $time_unit += 86400;
                 continue;
             }

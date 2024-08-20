@@ -1,13 +1,12 @@
-FROM centos:7
-MAINTAINER "Ted Eberhard" <eberhardtm@appstate.edu>
+FROM amazonlinux:2023
 ENV container docker
 USER root
 
 # install postgres
 
-RUN yum -y install postgresql postgresql-server postgresql-contrib postgresql-devel vim sudo git
-RUN yum -y update
-RUN yum -y install gcc make
+RUN dnf -y install postgresql15 postgresql15-server postgresql15-contrib postgresql15-server-devel postgresql15-private-devel vim sudo
+RUN dnf -y update
+RUN dnf -y install gcc make
 
 #RUN mkdir /var/lib/pgsql
 RUN chown postgres:postgres /var/lib/pgsql
@@ -17,9 +16,6 @@ RUN initdb -D "/var/lib/pgsql/data"
 
 #swap back to root for entry point and gmake
 USER root
-
-# install temporal tables
-RUN git clone https://github.com/arkhipov/temporal_tables.git
 
 ENV POSTGRES_PASSWORD=canopy \
     POSTGRES_USER=canopy \

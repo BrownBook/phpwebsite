@@ -668,7 +668,7 @@ class PHPWS_DB
         \phpws\PHPWS_DB::touchDB();
         $where = new \phpws\DB\PHPWS_DB_Where;
         $where->setJoin($join);
-        $operator = strtoupper($operator);
+        $operator = $operator ? strtoupper($operator) : null;
         if (is_array($column)) {
             foreach ($column as $new_column => $new_value) {
                 $result = $this->addWhere($new_column, $new_value, $operator, $conj, $group);
@@ -919,7 +919,7 @@ class PHPWS_DB
             return false;
         }
 
-        if (!in_array(strtolower($max_min), array('max', 'min'))) {
+        if (!is_null($max_min) && !in_array(strtolower($max_min), array('max', 'min'))) {
             $max_min = null;
         }
 
