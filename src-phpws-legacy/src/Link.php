@@ -154,7 +154,7 @@ class PHPWS_Link {
 
     public function setTarget($target)
     {
-        $target = strtolower($target);
+        $target = is_null($target) ? null : strtolower($target);
         switch ($target) {
             case 'index':
             case 'blank':

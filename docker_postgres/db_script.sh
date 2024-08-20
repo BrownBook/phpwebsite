@@ -22,7 +22,6 @@ main() {
   sudo -u postgres pg_ctl -D "/var/lib/pgsql/data" -w start
   check_env_vars_set
   init_user_and_db
-  setup_temporal_tables
   sudo -u postgres pg_ctl -D "/var/lib/pgsql/data" stop
 }
 
@@ -59,14 +58,6 @@ EOSQL
   echo "Created users and db"
 }
 
-setup_temporal_tables() {
-  echo "begin temporal tables setup"
-  cd temporal_tables && gmake && gmake install && gmake installcheck
-  psql $POSTGRES_USER -U $POSTGRES_PASSWORD -v ON_ERROR_STOP=1 <<-EOSQL
-     CREATE EXTENSION temporal_tables;
-EOSQL
-  echo "completed temporal tables setup"
-}
 # Executes the main routine with environment variables
 # passed through the command line. We don't use them in
 # this script but now you know 🤓

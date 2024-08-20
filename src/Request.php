@@ -905,8 +905,7 @@ class Request extends Data
      */
     public function filterString($value)
     {
-        return trim(strip_tags(filter_var($value, FILTER_SANITIZE_STRING,
-                                FILTER_FLAG_NO_ENCODE_QUOTES)));
+        return trim(strip_tags(htmlspecialchars($value)));
     }
 
     /**

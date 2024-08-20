@@ -447,7 +447,7 @@ class PHPWS_Form
         }
 
         for ($i = 1; $i < 13; $i++) {
-            $months[strftime('%m', mktime(0, 0, 0, $i, 1, 2004))] = strftime($month_format, mktime(0, 0, 0, $i, 1, 2004));
+            $months[date('d', mktime(0, 0, 0, $i, 1, 2004))] = strftime($month_format, mktime(0, 0, 0, $i, 1, 2004));
         }
 
         for ($i = 1; $i < 32; $i++) {
@@ -461,12 +461,12 @@ class PHPWS_Form
         }
 
         for ($i = 0; $i < 24; $i++) {
-            $hour = strftime('%H', mktime($i));
+            $hour = date('H', mktime($i));
             $hours_24[$hour] = $hour;
         }
 
         for ($i = 0; $i < 60; $i += 5) {
-            $minute = strftime('%M', mktime(1, $i));
+            $minute = date('i', mktime(1, $i));
             $minutes[$minute] = $minute;
         }
 
@@ -478,7 +478,7 @@ class PHPWS_Form
         $this->setMatch($name . '_year', (int) strftime('%Y', $current_date));
 
         $this->addSelect($name . '_month', $months);
-        $this->setMatch($name . '_month', (int) strftime('%m', $current_date));
+        $this->setMatch($name . '_month', (int) date('d', $current_date));
 
         $this->addSelect($name . '_day', $days);
         $this->setMatch($name . '_day', (int) strftime('%d', $current_date));
@@ -487,12 +487,12 @@ class PHPWS_Form
         $this->setMatch($name . '_12hour', strftime('%I', $current_date));
 
         $this->addSelect($name . '_24hour', $hours_24);
-        $this->setMatch($name . '_24hour', strftime('%H', $current_date));
+        $this->setMatch($name . '_24hour', date('H', $current_date));
 
         $this->addSelect($name . '_minute', $minutes);
-        $this->setMatch($name . '_minute', strftime('%M', $current_date));
+        $this->setMatch($name . '_minute', date('i', $current_date));
 
-        $am_pm_match = (int) strftime('%H', $current_date) < 12 ? 0 : 1;
+        $am_pm_match = (int) date('H', $current_date) < 12 ? 0 : 1;
 
         $this->addSelect($name . '_ampm', $am_pm);
         $this->setMatch($name . '_ampm', $am_pm_match);

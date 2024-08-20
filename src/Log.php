@@ -39,7 +39,7 @@ class Log {
         Log::loadTimeZone();
         
         $log_path = LOG_DIRECTORY . $filename;
-        $message = strftime('[' . LOG_TIME_FORMAT . ']', time()) . trim($message) . "\n";
+        $message = date('[' . LOG_TIME_FORMAT . ']', time()) . trim($message) . "\n";
         if (error_log($message, 3, $log_path)) {
             // We shouldn't be chmod'ing anything....
             //chmod($log_path, LOG_PERMISSION);

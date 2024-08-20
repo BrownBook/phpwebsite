@@ -394,7 +394,7 @@ class Blog_Admin
     public static function confirmPurge($purge_date)
     {
         $unix_purge_date = strtotime($purge_date);
-        $purge_date = strftime('%c', $unix_purge_date);
+        $purge_date = strftime(DATE_RFC2822, $unix_purge_date);
         $tpl['CONFIRM'] = PHPWS_Text::secureLink(sprintf(dgettext('blog',
                                         'I am sure that I want to delete all blog entries prior to %s'),
                                 $purge_date), 'blog',

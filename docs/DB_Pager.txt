@@ -483,7 +483,7 @@ like so:
 public function report_row_function()
 {
     $row['name']          = $this->name;
-    $row['date_of_entry'] = strftime('%c', $this->date_of_entry);
+    $row['date_of_entry'] = date(DATE_RFC2822, $this->date_of_entry);
 
     return $row;
 }
@@ -493,7 +493,7 @@ or as a stand alone function:
 function report_row_function($data)
 {
     $row['name']          = $data['name']
-    $row['date_of_entry'] = strftime('%c', $data['date_of_entry']);
+    $row['date_of_entry'] = date(DATE_RFC2822, $data['date_of_entry']);
 
     return $row;
 }

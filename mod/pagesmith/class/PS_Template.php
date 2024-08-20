@@ -37,7 +37,7 @@ class PS_Template {
     public function loadTemplate()
     {
         \phpws\PHPWS_Core::initCoreClass('XMLParser.php');
-        $xml = new XMLParser($this->file);
+        $xml = new \phpws\XMLParser($this->file);
         $xml->setContentOnly(true);
         if (PHPWS_Error::isError($xml->error)) {
             return $xml->error;

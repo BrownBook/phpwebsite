@@ -810,15 +810,15 @@ EOF;
             }
         }
 
-        $minute_match = (int) strftime('%M', $match);
+        $minute_match = (int) date('i', $match);
         $minute_match -= $minute_match % CALENDAR_TIME_MINUTE_INC;
 
         $form->addSelect($name . '_hour', $hours);
-        $form->setMatch($name . '_hour', (int) strftime('%H', $match));
+        $form->setMatch($name . '_hour', (int) date('H', $match));
 
         if (empty($minutes)) {
             for ($i = 0; $i < 60; $i += CALENDAR_TIME_MINUTE_INC) {
-                $minutes[$i] = strftime('%M', mktime(1, $i));
+                $minutes[$i] = date('i', mktime(1, $i));
             }
         }
         $form->addSelect($name . '_minute', $minutes);

@@ -164,11 +164,11 @@ class PHPWS_Time {
 			$time = PHPWS_Time::getServerTime();
 		}
 
-		$aTime['m'] = (int)strftime('%m', $time);
+		$aTime['m'] = (int)date('d', $time);
 		$aTime['d'] = (int)strftime('%e', $time);
 		$aTime['y'] = (int)strftime('%Y', $time);
 		$aTime['h'] = (int)strftime('%k', $time);
-		$aTime['i'] = (int)strftime('%M', $time);
+		$aTime['i'] = (int)date('i', $time);
 		$aTime['u'] = $time;
 
 		return $aTime;

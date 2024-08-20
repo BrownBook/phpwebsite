@@ -86,14 +86,14 @@ class Calendar_User
                     // If the events end time is equal to today,
                     // use the end time as the key
                     if (date('Ymd', $oEvent->end_time) == date('Ymd', $startdate)) {
-                        $newList[strftime('%H', $oEvent->end_time)][] = $oEvent;
+                        $newList[date('H', $oEvent->end_time)][] = $oEvent;
                     } elseif (date('Ymd', $oEvent->start_time) != date('Ymd', $startdate)) {
                         $newList[-1][] = $oEvent;
                     } else {
-                        $newList[strftime('%H', $oEvent->start_time)][] = $oEvent;
+                        $newList[date('H', $oEvent->start_time)][] = $oEvent;
                     }
                 } else {
-                    $newList[strftime('%H', $oEvent->start_time)][] = $oEvent;
+                    $newList[date('H', $oEvent->start_time)][] = $oEvent;
                 }
             }
         }

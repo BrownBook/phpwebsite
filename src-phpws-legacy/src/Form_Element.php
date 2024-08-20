@@ -229,7 +229,7 @@ class Form_Element
 
     public function getValue()
     {
-        if ($this->allowValue) {
+        if ($this->allowValue && !is_null($this->value)) {
             $value = str_replace('"', '&quot;', $this->value);
             return 'value="' . $value . '" ';
         } else {
