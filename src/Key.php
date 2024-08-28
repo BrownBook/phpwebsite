@@ -86,14 +86,14 @@ class Key
         }
     }
 
-    public function getCreateDate($format = '%c')
+    public function getCreateDate($format = 'r')
     {
-        return strftime($format, \phpws\PHPWS_Time::getServerTime($this->create_date));
+        return date($format, \phpws\PHPWS_Time::getServerTime($this->create_date));
     }
 
-    public function getUpdateDate($format = '%c')
+    public function getUpdateDate($format = 'r')
     {
-        return strftime($format, \phpws\PHPWS_Time::getServerTime($this->update_date));
+        return date($format, \phpws\PHPWS_Time::getServerTime($this->update_date));
     }
 
     public function restrictToLogged()

@@ -205,7 +205,7 @@ class RSS_Channel {
                 $itemTpl['ITEM_AUTHOR']       = $key->creator;
                 //              $itemTpl['ITEM_PUBDATE']      = $key->getCreateDate('%Y-%m-%d %H:%M:%S CST');
                 $itemTpl['ITEM_PUBDATE'] = $this->rssDate($key->create_date);
-                $itemTpl['ITEM_DC_DATE']      = $key->getCreateDate('%Y-%m-%dT%H:%M:%S') . $timezone;
+                $itemTpl['ITEM_DC_DATE']      = $key->getCreateDate('Y-m-dTG:i:s') . $timezone;
                 $itemTpl['ITEM_DC_TYPE']      = 'Text'; //pull from db later
                 $itemTpl['ITEM_DC_CREATOR']   = $key->creator;
 
