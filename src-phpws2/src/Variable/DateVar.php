@@ -15,7 +15,7 @@ class DateVar extends IntegerVar
     protected $input_type = 'date';
 
     /**
-     * Output format. Based on strftime.
+     * Output format. Based on date.
      * @var string
      */
     protected $format = '%F';
@@ -42,7 +42,7 @@ class DateVar extends IntegerVar
     /**
      * Sets the output format.
      *
-     * @see http://php.net/manual/en/function.strftime.php
+     * @see http://php.net/manual/en/function.date.php
      * @param string $format
      */
     public function setFormat($format)
@@ -73,7 +73,7 @@ class DateVar extends IntegerVar
             if (empty($format)) {
                 return $this->value;
             } else {
-                return strftime($format, $this->value);
+                return date($format, $this->value);
             }
         }
     }

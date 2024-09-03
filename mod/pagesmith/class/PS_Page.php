@@ -216,8 +216,8 @@ class PS_Page
         if (isset($links)) {
             $tpl['ACTION'] = implode(' ', $links);
         }
-        $tpl['CREATE_DATE'] = strftime('%d %b %y, %H:%M', $this->create_date);
-        $tpl['LAST_UPDATED'] = strftime('%d %b %y, %H:%M', $this->last_updated);
+        $tpl['CREATE_DATE'] = date('d M y, H:i', $this->create_date);
+        $tpl['LAST_UPDATED'] = date('d M y, H:i', $this->last_updated);
         $tpl['UPDATER'] = $this->_updater;
 
         if ($subpage) {
@@ -496,7 +496,7 @@ class PS_Page
 
         if (Current_User::allow('pagesmith') && $this->_key->show_after > time()) {
             $tpl['SHOW_AFTER'] = sprintf('Page hidden until %s',
-                    strftime('%F %H:%M', $this->_key->show_after));
+                    date('d M y, H:i', $this->_key->show_after));
         }
 
         $tpl['CONTENT'] = PHPWS_Template::process($this->_content, 'pagesmith',
@@ -678,7 +678,7 @@ class PS_Page
 
     public static function purgeRows($rows)
     {
-        $rows['last_updated'] = strftime('%Y/%m/%d %H:%M', $rows['last_updated']);
+        $rows['last_updated'] = date('Y/m/d H:i', $rows['last_updated']);
         $rows['option'] = '<button class="btn btn-danger purge" data-page-id="' . $rows['id']
                 . '">Purge</button>&nbsp;' . '<button class="btn btn-success restore" data-page-id="'
                 . $rows['id'] . '">Restore</button>';

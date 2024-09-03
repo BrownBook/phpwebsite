@@ -165,9 +165,9 @@ class PHPWS_Time {
 		}
 
 		$aTime['m'] = (int)date('d', $time);
-		$aTime['d'] = (int)strftime('%e', $time);
-		$aTime['y'] = (int)strftime('%Y', $time);
-		$aTime['h'] = (int)strftime('%k', $time);
+		$aTime['d'] = (int)date('j', $time);
+		$aTime['y'] = (int)date('Y', $time);
+		$aTime['h'] = (int)date('G', $time);
 		$aTime['i'] = (int)date('i', $time);
 		$aTime['u'] = $time;
 
@@ -191,7 +191,7 @@ class PHPWS_Time {
 	 * @date   2006-02-03
 	 *
 	 */
-	public static function relativeTime($timestamp, $format='%c')
+	public static function relativeTime($timestamp, $format='r')
 	{
 		$timestamp = intval($timestamp);
 		$rel   = time() - $timestamp;
@@ -225,7 +225,7 @@ class PHPWS_Time {
 			return sprintf(_('%s weeks ago'), $weeks);
 		}
 		else {
-			return strftime($format, $timestamp);
+			return date($format, $timestamp);
 		}
 	}
 }

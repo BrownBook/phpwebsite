@@ -184,17 +184,17 @@ class Blog {
         $this->title = strip_tags($title);
     }
 
-    public function getLocalDate($type = BLOG_VIEW_DATE_FORMAT)
+    public function getLocalDate($format = BLOG_VIEW_DATE_FORMAT)
     {
-        return strftime($type, PHPWS_Time::getUserTime($this->create_date));
+        return date($format, PHPWS_Time::getUserTime($this->create_date));
     }
 
-    public function getPublishDate($type = BLOG_VIEW_DATE_FORMAT)
+    public function getPublishDate($format = BLOG_VIEW_DATE_FORMAT)
     {
         if ($this->publish_date) {
-            return strftime($type, $this->publish_date);
+            return date($format, $this->publish_date);
         } else {
-            return strftime($type, time());
+            return date($format, time());
         }
     }
 
@@ -210,28 +210,28 @@ class Blog {
     public function getExpireDate()
     {
         if ($this->expire_date) {
-            return strftime('%Y/%m/%d %H:%M', $this->expire_date);
+            return date('Y/m/j G:i', $this->expire_date);
         } else {
             return null;
         }
     }
 
-    public function relativeCreateDate($type = BLOG_VIEW_DATE_FORMAT)
+    public function relativeCreateDate($format = BLOG_VIEW_DATE_FORMAT)
     {
-        return strftime($type, PHPWS_Time::getServerTime($this->create_date));
+        return date($format, PHPWS_Time::getServerTime($this->create_date));
     }
 
-    public function relativePublishDate($type = BLOG_VIEW_DATE_FORMAT)
+    public function relativePublishDate($format = BLOG_VIEW_DATE_FORMAT)
     {
-        return strftime($type, PHPWS_Time::getServerTime($this->publish_date));
+        return date($format, PHPWS_Time::getServerTime($this->publish_date));
     }
 
-    public function relativeExpireDate($type = BLOG_VIEW_DATE_FORMAT)
+    public function relativeExpireDate($format = BLOG_VIEW_DATE_FORMAT)
     {
         if (!$this->expire_date) {
             return 'No expiration';
         } else {
-            return strftime($type, PHPWS_Time::getServerTime($this->expire_date));
+            return date($format, PHPWS_Time::getServerTime($this->expire_date));
         }
     }
 
@@ -640,10 +640,10 @@ class Blog {
         $row['summary'] = $this->reportClean($this->getSummary(true));
         $row['entry'] = $this->reportClean($this->getEntry(true));
         $row['author'] = $this->author;
-        $row['creation date'] = strftime('%c', $this->create_date);
-        $row['publish date'] = strftime('%c', $this->publish_date);
+        $row['creation date'] = date('r', $this->create_date);
+        $row['publish date'] = date('r', $this->publish_date);
         if ($this->expire_date) {
-            $row['expiration date'] = strftime('%c', $this->expire_date);
+            $row['expiration date'] = date('r', $this->expire_date);
         } else {
             $row['expiration date'] = 'None';
         }

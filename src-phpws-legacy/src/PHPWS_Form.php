@@ -421,15 +421,15 @@ class PHPWS_Form
         return checkdate($month, $day, $year);
     }
 
-    public function dateSelect($name, $current_date = 0, $month_format = '%B', $years_past = 1, $years_ahead = 3)
+    public function dateSelect($name, $current_date = 0, $month_format = 'F', $years_past = 1, $years_ahead = 3)
     {
-        $allowed_month_formats = array('%b', '%B', '%m');
+        $allowed_month_formats = array('M', 'F', 'm');
         if ($current_date < 1) {
             $current_date = time();
         }
 
         if (!in_array($month_format, $allowed_month_formats)) {
-            $month_format = '%B';
+            $month_format = 'F';
         }
 
         if ($years_past < 0) {
@@ -447,16 +447,16 @@ class PHPWS_Form
         }
 
         for ($i = 1; $i < 13; $i++) {
-            $months[date('d', mktime(0, 0, 0, $i, 1, 2004))] = strftime($month_format, mktime(0, 0, 0, $i, 1, 2004));
+            $months[date('d', mktime(0, 0, 0, $i, 1, 2004))] = date($month_format, mktime(0, 0, 0, $i, 1, 2004));
         }
 
         for ($i = 1; $i < 32; $i++) {
-            $day = strftime('%d', mktime(0, 0, 0, 1, $i, 2004));
+            $day = date('d', mktime(0, 0, 0, 1, $i, 2004));
             $days[$day] = $day;
         }
 
         for ($i = 1; $i < 13; $i++) {
-            $hour = strftime('%I', mktime($i));
+            $hour = date('h', mktime($i));
             $hours_12[$hour] = $hour;
         }
 
@@ -470,21 +470,21 @@ class PHPWS_Form
             $minutes[$minute] = $minute;
         }
 
-        $am_pm[0] = strftime('%p', mktime(1));
-        $am_pm[1] = strftime('%p', mktime(15));
+        $am_pm[0] = date('A', mktime(1));
+        $am_pm[1] = date('A', mktime(15));
 
 
         $this->addSelect($name . '_year', $years);
-        $this->setMatch($name . '_year', (int) strftime('%Y', $current_date));
+        $this->setMatch($name . '_year', (int) date('X', $current_date));
 
         $this->addSelect($name . '_month', $months);
         $this->setMatch($name . '_month', (int) date('d', $current_date));
 
         $this->addSelect($name . '_day', $days);
-        $this->setMatch($name . '_day', (int) strftime('%d', $current_date));
+        $this->setMatch($name . '_day', (int) date('d', $current_date));
 
         $this->addSelect($name . '_12hour', $hours_12);
-        $this->setMatch($name . '_12hour', strftime('%I', $current_date));
+        $this->setMatch($name . '_12hour', date('%h', $current_date));
 
         $this->addSelect($name . '_24hour', $hours_24);
         $this->setMatch($name . '_24hour', date('H', $current_date));

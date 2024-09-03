@@ -78,7 +78,7 @@ class Access_Shortcut
 
     public function postShortcut()
     {
-        $keyword = filter_input(INPUT_POST, 'keyword', FILTER_SANITIZE_STRING);
+        $keyword = htmlspecialchars(strip_tags($_POST['keyword']));
 
         if ($keyword === false) {
             throw new \Exception('Access shortcut submission missing keyword', 1);

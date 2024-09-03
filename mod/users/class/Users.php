@@ -918,7 +918,7 @@ class PHPWS_User
         }
 
         $this->auth_script = $filename;
-        $this->auth_name = preg_replace('/\.php$/i', '', $filename);
+        $this->auth_name = preg_replace('/\.php$/i', '', !is_null($filename) ? $filename : '');
 
         if (!is_file(USERS_AUTH_PATH . $this->auth_script)) {
             PHPWS_Error::log(USER_ERR_MISSING_AUTH, 'users',

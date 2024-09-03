@@ -264,7 +264,7 @@ class PHPWS_Core
      * Sends a location header based on the relative link passed
      * to the function.
      */
-    public static function reroute($address = NULL)
+    public static function reroute($address = '')
     {
         $current_url = \phpws\PHPWS_Core::getCurrentUrl();
 
