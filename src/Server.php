@@ -40,7 +40,7 @@ class Server
             $dataValues = array();
             parse_str($data, $dataValues);
 
-            $content_type = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : null;
+            $content_type = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : '';
 
             switch ($method) {
                 case 'PATCH':

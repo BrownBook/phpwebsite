@@ -31,7 +31,7 @@ if (isset($data['center'])) {
 
 $site_address = \phpws\PHPWS_Core::getHomeHttp();
 
-if (!stristr($data['address'], $site_address)) {
+if (isset($data['address']) && !stristr($data['address'], $site_address)) {
     $data['address'] = $site_address .  $data['address'];
 }
 

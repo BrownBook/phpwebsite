@@ -111,7 +111,7 @@ class PS_Forms
 
         $tpl = $form->getTemplate();
         $tpl['PUBLISH_DATE_LABEL'] = 'Show page after this date and time';
-        $tpl['PUBLISH_VALUE'] = strftime('%Y-%m-%dT%H:%M:%S', $publish_date);
+        $tpl['PUBLISH_VALUE'] = date('Y-m-d H:i:s', $publish_date);
 
         $tpl['PAGE_TITLE'] = $page->title;
         $jsvars['page_title_input'] = 'pagesmith_title';

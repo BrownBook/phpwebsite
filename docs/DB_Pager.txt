@@ -228,7 +228,7 @@ format it for you:
 $pager->convertDate($column_name, $format[%c]);
 
 The $column_name is the title of the datetime column. The format
-matches the parameters used in the strftime function. The default
+matches the parameters used in the date function. The default
 value is '%c'.
 
 Keep in mind that dates are formatted BEFORE what is called in

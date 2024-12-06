@@ -93,7 +93,7 @@ class Form_TextArea extends Form_Element
             return javascript('ckeditor', array('ID' => $this->id, 'NAME' => $this->name, 'VALUE' => $text));
         }
 
-        $value = preg_replace('/<br\s?\/?>(\r\n)?/', "\n", $this->value);
+        $value = preg_replace('/<br\s?\/?>(\r\n)?/', "\n", is_null($this->value) ? '' : $this->value);
 
         if (ord(substr($value, 0, 1)) == 13) {
             $value = "\n" . $value;
