@@ -28,7 +28,7 @@ require_once 'HTTP.php';
 define('HTTP_HEADER_STATUS_100', '100 Continue');
 define('HTTP_HEADER_STATUS_101', '101 Switching Protocols');
 define('HTTP_HEADER_STATUS_102', '102 Processing');
-define('HTTP_HEADER_STATUS_INFORMATIONAL',1);
+define('HTTP_HEADER_STATUS_INFORMATIONAL', 1);
 /**#@-*/
 
 /**#+
@@ -42,7 +42,7 @@ define('HTTP_HEADER_STATUS_204', '204 No Content');
 define('HTTP_HEADER_STATUS_205', '205 Reset Content');
 define('HTTP_HEADER_STATUS_206', '206 Partial Content');
 define('HTTP_HEADER_STATUS_207', '207 Multi-Status');
-define('HTTP_HEADER_STATUS_SUCCESSFUL',2);
+define('HTTP_HEADER_STATUS_SUCCESSFUL', 2);
 /**#@-*/
 
 /**#@+
@@ -56,7 +56,7 @@ define('HTTP_HEADER_STATUS_304', '304 Not Modified');
 define('HTTP_HEADER_STATUS_305', '305 Use Proxy');
 define('HTTP_HEADER_STATUS_306', '306 (Unused)');
 define('HTTP_HEADER_STATUS_307', '307 Temporary Redirect');
-define('HTTP_HEADER_STATUS_REDIRECT',3);
+define('HTTP_HEADER_STATUS_REDIRECT', 3);
 /**#@-*/
 
 /**#@+
@@ -83,7 +83,7 @@ define('HTTP_HEADER_STATUS_417', '417 Expectation Failed');
 define('HTTP_HEADER_STATUS_422', '422 Unprocessable Entity');
 define('HTTP_HEADER_STATUS_423', '423 Locked');
 define('HTTP_HEADER_STATUS_424', '424 Failed Dependency');
-define('HTTP_HEADER_STATUS_CLIENT_ERROR',4);
+define('HTTP_HEADER_STATUS_CLIENT_ERROR', 4);
 /**#@-*/
 
 /**#@+
@@ -96,7 +96,7 @@ define('HTTP_HEADER_STATUS_503', '503 Service Unavailable');
 define('HTTP_HEADER_STATUS_504', '504 Gateway Time-out');
 define('HTTP_HEADER_STATUS_505', '505 HTTP Version not supported');
 define('HTTP_HEADER_STATUS_507', '507 Insufficient Storage');
-define('HTTP_HEADER_STATUS_SERVER_ERROR',5);
+define('HTTP_HEADER_STATUS_SERVER_ERROR', 5);
 /**#@-*/
 
 /**
@@ -260,12 +260,12 @@ class HTTP_Header extends HTTP
             array_change_key_case($keys, CASE_LOWER);
             foreach ($this->_headers as $key => $value) {
                 if ($include ? in_array($key, $keys) : !in_array($key, $keys)) {
-                    header($key .': '. $value);
+                    header($key . ': ' . $value);
                 }
             }
         } else {
             foreach ($this->_headers as $header => $value) {
-                header($header .': '. $value);
+                header($header . ': ' . $value);
             }
         }
         return true;
@@ -291,14 +291,14 @@ class HTTP_Header extends HTTP
             return false;
         }
 
-        if ($code == (int) $code && defined('HTTP_HEADER_STATUS_'. $code)) {
-            $code = constant('HTTP_HEADER_STATUS_'. $code);
+        if ($code == (int) $code && defined('HTTP_HEADER_STATUS_' . $code)) {
+            $code = constant('HTTP_HEADER_STATUS_' . $code);
         }
 
         if (strncasecmp(PHP_SAPI, 'cgi', 3)) {
-            header('HTTP/'. $this->_httpVersion .' '. $code);
+            header('HTTP/' . $this->_httpVersion . ' ' . $code);
         } else {
-            header('Status: '. $code);
+            header('Status: ' . $code);
         }
         return true;
     }
@@ -320,17 +320,30 @@ class HTTP_Header extends HTTP
     function dateToTimestamp($date)
     {
         static $months = array(
-            null => 0, 'Jan' => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4,
-            'May' => 5, 'Jun' => 6, 'Jul' => 7, 'Aug' => 8, 'Sep' => 9,
-            'Oct' => 10, 'Nov' => 11, 'Dec' => 12
+            null => 0,
+            'Jan' => 1,
+            'Feb' => 2,
+            'Mar' => 3,
+            'Apr' => 4,
+            'May' => 5,
+            'Jun' => 6,
+            'Jul' => 7,
+            'Aug' => 8,
+            'Sep' => 9,
+            'Oct' => 10,
+            'Nov' => 11,
+            'Dec' => 12
         );
 
         if (-1 < $timestamp = strToTime($date)) {
             return $timestamp;
         }
 
-        if (!preg_match('~[^,]*,\s(\d+)\s(\w+)\s(\d+)\s(\d+):(\d+):(\d+).*~',
-            $date, $m)) {
+        if (!preg_match(
+            '~[^,]*,\s(\d+)\s(\w+)\s(\d+)\s(\d+):(\d+):(\d+).*~',
+            $date,
+            $m
+        )) {
             return false;
         }
 
@@ -370,16 +383,16 @@ class HTTP_Header extends HTTP
         $qs = array();
 
         if ($session) {
-            $qs[] = session_name() .'='. session_id();
+            $qs[] = session_name() . '=' . session_id();
         }
 
         if (is_array($param) && count($param)) {
             if (count($param)) {
                 foreach ($param as $key => $val) {
                     if (is_string($key)) {
-                        $qs[] = urlencode($key) .'='. urlencode($val);
+                        $qs[] = urlencode($key) . '=' . urlencode($val);
                     } else {
-                        $qs[] = urlencode($val) .'='. urlencode(@$GLOBALS[$val]);
+                        $qs[] = urlencode($val) . '=' . urlencode(@$GLOBALS[$val]);
                     }
                 }
             }
@@ -406,8 +419,8 @@ class HTTP_Header extends HTTP
      */
     function getStatusType($http_code)
     {
-        if(is_int($http_code) && defined('HTTP_HEADER_STATUS_' .$http_code) || defined($http_code)) {
-            $type = substr($http_code,0,1);
+        if (is_int($http_code) && defined('HTTP_HEADER_STATUS_' . $http_code) || defined($http_code)) {
+            $type = substr($http_code, 0, 1);
             switch ($type) {
                 case HTTP_HEADER_STATUS_INFORMATIONAL:
                 case HTTP_HEADER_STATUS_SUCCESSFUL:
@@ -433,10 +446,10 @@ class HTTP_Header extends HTTP
     function getStatusText($http_code)
     {
         if ($this->getStatusType($http_code)) {
-            if (is_int($http_code) && defined('HTTP_HEADER_STATUS_' .$http_code)) {
-                return substr(constant('HTTP_HEADER_STATUS_' .$http_code),4);
+            if (is_int($http_code) && defined('HTTP_HEADER_STATUS_' . $http_code)) {
+                return substr(constant('HTTP_HEADER_STATUS_' . $http_code), 4);
             } else {
-                return substr($http_code,4);
+                return substr($http_code, 4);
             }
         } else {
             return false;
@@ -451,7 +464,7 @@ class HTTP_Header extends HTTP
     function isInformational($http_code)
     {
         if ($status_type = $this->getStatusType($http_code)) {
-            return $status_type{0} == HTTP_HEADER_STATUS_INFORMATIONAL;
+            return $status_type[0] == HTTP_HEADER_STATUS_INFORMATIONAL;
         } else {
             return false;
         }
@@ -465,7 +478,7 @@ class HTTP_Header extends HTTP
     function isSuccessful($http_code)
     {
         if ($status_type = $this->getStatusType($http_code)) {
-            return $status_type{0} == HTTP_HEADER_STATUS_SUCCESSFUL;
+            return $status_type[0] == HTTP_HEADER_STATUS_SUCCESSFUL;
         } else {
             return false;
         }
@@ -479,7 +492,7 @@ class HTTP_Header extends HTTP
     function isRedirect($http_code)
     {
         if ($status_type = $this->getStatusType($http_code)) {
-            return $status_type{0} == HTTP_HEADER_STATUS_REDIRECT;
+            return $status_type[0] == HTTP_HEADER_STATUS_REDIRECT;
         } else {
             return false;
         }
@@ -493,7 +506,7 @@ class HTTP_Header extends HTTP
     function isClientError($http_code)
     {
         if ($status_type = $this->getStatusType($http_code)) {
-            return $status_type{0} == HTTP_HEADER_STATUS_CLIENT_ERROR;
+            return $status_type[0] == HTTP_HEADER_STATUS_CLIENT_ERROR;
         } else {
             return false;
         }
@@ -507,7 +520,7 @@ class HTTP_Header extends HTTP
     function isServerError($http_code)
     {
         if ($status_type = $this->getStatusType($http_code)) {
-            return $status_type{0} == HTTP_HEADER_STATUS_SERVER_ERROR;
+            return $status_type[0] == HTTP_HEADER_STATUS_SERVER_ERROR;
         } else {
             return false;
         }

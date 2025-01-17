@@ -65,7 +65,7 @@ class HTTP
         // RFC822 or RFC850
         $format = ini_get('y2k_compliance') ? 'D, d M Y' : 'l, d-M-y';
 
-        return gmdate($format .' H:i:s \G\M\T', $time);
+        return gmdate($format . ' H:i:s \G\M\T', $time);
     }
 
     /**
@@ -115,8 +115,10 @@ class HTTP
         }
 
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $match = HTTP::_matchAccept($_SERVER['HTTP_ACCEPT_LANGUAGE'],
-                                        $supp);
+            $match = HTTP::_matchAccept(
+                $_SERVER['HTTP_ACCEPT_LANGUAGE'],
+                $supp
+            );
             if (!is_null($match)) {
                 return $match;
             }
@@ -169,8 +171,10 @@ class HTTP
         }
 
         if (isset($_SERVER['HTTP_ACCEPT_CHARSET'])) {
-            $match = HTTP::_matchAccept($_SERVER['HTTP_ACCEPT_CHARSET'],
-                                        $supp);
+            $match = HTTP::_matchAccept(
+                $_SERVER['HTTP_ACCEPT_CHARSET'],
+                $supp
+            );
             if (!is_null($match)) {
                 return $match;
             }
@@ -339,7 +343,7 @@ class HTTP
         if (!isset($p['scheme'])) {
             $p = parse_url(HTTP::absoluteURI($url));
         } elseif ($p['scheme'] != 'http') {
-            return HTTP::raiseError('Unsupported protocol: '. $p['scheme']);
+            return HTTP::raiseError('Unsupported protocol: ' . $p['scheme']);
         }
 
         $port = isset($p['port']) ? $p['port'] : 80;
@@ -399,19 +403,21 @@ class HTTP
         }
 
         $url = HTTP::absoluteURI($url);
-        header('Location: '. $url);
+        header('Location: ' . $url);
 
-        if ($rfc2616 && isset($_SERVER['REQUEST_METHOD'])
-            && $_SERVER['REQUEST_METHOD'] != 'HEAD') {
+        if (
+            $rfc2616 && isset($_SERVER['REQUEST_METHOD'])
+            && $_SERVER['REQUEST_METHOD'] != 'HEAD'
+        ) {
             echo '
-<p>Redirecting to: <a href="'.str_replace('"', '%22', $url).'">'
-                 .htmlspecialchars($url).'</a>.</p>
+<p>Redirecting to: <a href="' . str_replace('"', '%22', $url) . '">'
+                . htmlspecialchars($url) . '</a>.</p>
 <script type="text/javascript">
 //<![CDATA[
 if (location.replace == null) {
     location.replace = location.assign;
 }
-location.replace("'.str_replace('"', '\\"', $url).'");
+location.replace("' . str_replace('"', '\\"', $url) . '");
 // ]]>
 </script>';
         }
@@ -454,11 +460,14 @@ location.replace("'.str_replace('"', '\\"', $url).'");
                 return $url;
             }
             if (!empty($protocol)) {
-                $url = $protocol .':'. end($array = explode(':', $url, 2));
+                $url = $protocol . ':' . end($array = explode(':', $url, 2));
             }
             if (!empty($port)) {
-                $url = preg_replace('!^(([a-z0-9]+)://[^/:]+)(:[\d]+)?!i',
-                                    '\1:'. $port, $url);
+                $url = preg_replace(
+                    '!^(([a-z0-9]+)://[^/:]+)(:[\d]+)?!i',
+                    '\1:' . $port,
+                    $url
+                );
             }
             return $url;
         }
@@ -488,35 +497,38 @@ location.replace("'.str_replace('"', '\\"', $url).'");
             unset($port);
         }
 
-        $server = $protocol.'://'.$host.(isset($port) ? ':'.$port : '');
+        $server = $protocol . '://' . $host . (isset($port) ? ':' . $port : '');
 
         $uriAll = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI']
-                                                 : $_SERVER['PHP_SELF'];
+            : $_SERVER['PHP_SELF'];
         if (false !== ($q = strpos($uriAll, '?'))) {
             $uriBase = substr($uriAll, 0, $q);
         } else {
             $uriBase = $uriAll;
         }
-        if (!strlen($url) || $url{0} == '#') {
-            $url = $uriAll.$url;
-        } elseif ($url{0} == '?') {
-            $url = $uriBase.$url;
+        if (!strlen($url) || $url[0] == '#') {
+            $url = $uriAll . $url;
+        } elseif ($url[0] == '?') {
+            $url = $uriBase . $url;
         }
-        if ($url{0} == '/') {
+        if ($url[0] == '/') {
             return $server . $url;
         }
 
         // Adjust for PATH_INFO if needed
         if (isset($_SERVER['PATH_INFO']) && strlen($_SERVER['PATH_INFO'])) {
-            $path = dirname(substr($uriBase, 0,
-                                   -strlen($_SERVER['PATH_INFO'])));
+            $path = dirname(substr(
+                $uriBase,
+                0,
+                -strlen($_SERVER['PATH_INFO'])
+            ));
         } else {
             /**
              * Fixes bug #12672 PHP_SELF ending on / causes incorrect redirects
              *
              * @link http://pear.php.net/bugs/12672
              */
-            $path = dirname($uriBase.'-');
+            $path = dirname($uriBase . '-');
         }
 
         if (substr($path = strtr($path, '\\', '/'), -1) != '/') {
@@ -544,5 +556,3 @@ location.replace("'.str_replace('"', '\\"', $url).'");
         return PEAR::raiseError($error, $code);
     }
 }
-
-?>
