@@ -18,6 +18,7 @@ class Template implements View
     private $allow_theme = false;
     private $theme_file;
     private $using_module_file = false;
+    private $contentType = null;
 
     /**
      * @param array|null $variables Values shown inside the template
@@ -172,5 +173,4 @@ class Template implements View
     {
         return $this->variables;
     }
-
 }

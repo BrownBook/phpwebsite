@@ -49,6 +49,9 @@ class Form_Element
     // When multiple values are sent to an element, this variable
     // stores the position for labels and titles
     public $place = 0;
+    public $size = null;
+    public $extra = null;
+    public $maxsize = null;
 
     public function __construct($name, $value = null)
     {
@@ -445,5 +448,4 @@ class Form_Element
             return strtoupper($name);
         }
     }
-
 }

@@ -8,7 +8,8 @@ namespace phpws2;
  * @author Matthew McNaney <mcnaney at gmail dot com>
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
-class Modal {
+class Modal
+{
 
     /**
      * DOM id identifying the modal
@@ -68,6 +69,8 @@ class Modal {
      * @var boolean
      */
     public static $modal_started = false;
+
+    private $width;
 
     public function __construct($id, $content = null, $title = null)
     {
@@ -214,5 +217,4 @@ class Modal {
         $template = new Template($tpl, PHPWS_SOURCE_DIR . 'src-phpws2/templates/Modal/modal.html');
         return $template->render();
     }
-
 }

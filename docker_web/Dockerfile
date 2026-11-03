@@ -2,14 +2,14 @@ FROM amazonlinux:2023
 ENV container docker
 USER root
 
-RUN dnf install -y nginx php8.1 php8.1-fpm php8.1-devel php8.1-dba php8.1-mbstring php8.1-pgsql php8.1-pdo php8.1-gd php-pear postgresql15 postgresql15-contrib
+RUN dnf install -y nginx php8.2 php8.2-fpm php8.2-devel php8.2-dba php8.2-mbstring php8.2-pgsql php8.2-pdo php8.2-gd php-pear postgresql15 postgresql15-contrib
 
 
 RUN dnf -y install gcc make vim zip unzip;
 RUN dnf -y update
-RUN pecl install Xdebug
+#RUN pecl install Xdebug
 
-ADD docker_conf/xdebug.ini /etc/php.d/xdebug.ini
+#ADD docker_conf/xdebug.ini /etc/php.d/xdebug.ini
 
 RUN mkdir /etc/nginx/conf.d/common
 

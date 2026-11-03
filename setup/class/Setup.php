@@ -1210,7 +1210,8 @@ class Setup
                 }
 
             case '7':
-                $dsn = $this->getDSN(2);
+                //$dsn = $this->getDSN(2);
+                $dsn = $this->getDoctrineDSN();
                 $this->setConfigSet('dsn', $dsn);
                 $_SESSION['configSettings']['database'] = true;
                 if ($this->writeConfigFile()) {
